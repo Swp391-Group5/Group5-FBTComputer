@@ -86,28 +86,21 @@ public class ProfileServlet extends HttpServlet {
 
                     // Use LocalDate for simpler date handling
                     LocalDate DateOfBirth = LocalDate.parse(dateOfBirthStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    
+
                     // Convert LocalDate to java.sql.Date
                     java.sql.Date sqlDateOfBirth = java.sql.Date.valueOf(DateOfBirth);
-                    
+
                     // Calculate age using Period
                     int age = Period.between(DateOfBirth, LocalDate.now()).getYears();
-                    
-                    
+
                     if (!(phoneStr.length() == 10 && phoneStr.charAt(0) == '0') || age < 18 || age > 60) {
                         String errorMessage = null;
                         if (!(phoneStr.length() == 10 && phoneStr.charAt(0) == '0')) {
                             errorMessage = "Phone number must start with a zero digit and have exactly 10 digits.";
                             request.setAttribute("errorMessagePhone", errorMessage);
                         }
-                        if (age < 18) {
-                            errorMessage = "You must be at least 18 years old.";
-                            request.setAttribute("errorMessageDateOfBirth", errorMessage);
-                        }
-                        if (age > 60) {
-                            errorMessage = "You must be under 60 years old.";
-                            request.setAttribute("errorMessageDateOfBirth", errorMessage);
-                        }
+                        errorMessage = (age < 18) ? "You must be at least 18 years old." : "You must be under 60 years old.";
+                        request.setAttribute("errorMessageDateOfBirth", errorMessage);
                         request.setAttribute("customer", customer);
                         request.setAttribute("action", "editInfo");
                         request.getRequestDispatcher("profile.jsp").forward(request, response);
@@ -118,7 +111,7 @@ public class ProfileServlet extends HttpServlet {
                     // Set the below to database
                     try {
                         // vẫn phải truyền id vào vì UserDAO cần id để biết thằng nào cần thay đổi
-                        Customer updateCustomer = new Customer(customer.getCustomerId(), accountName, age ,customer.getCustomerEmail(), gender, address, city, phoneStr, sqlDateOfBirth);
+                        Customer updateCustomer = new Customer(customer.getCustomerId(), accountName, age, customer.getCustomerEmail(), gender, address, city, phoneStr, sqlDateOfBirth);
                         userDAO.updateCustomer(updateCustomer);
                         response.sendRedirect(request.getContextPath() + "/profile");
                     } catch (Exception e) {
@@ -139,41 +132,39 @@ public class ProfileServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/error/error.jsp?error=" + e);
                     return;
                 }
-                
+
                 String currentPassword = request.getParameter("currentPassword");
                 String password = request.getParameter("password");
                 String confirmPassword = request.getParameter("confirmPassword");
                 String changePasswordSuccessMessage = null;
-                String errorCurrentPassword = null;
-                String errorNewPassword = null;
-                
+                String errorMessage = null;
+
                 //encrypt currentpassword
                 String encryptedCurrentPassword = Encryptor.SHA256Encryption(currentPassword);
                 //encrypt newpassword
                 String encryptedPassword = Encryptor.SHA256Encryption(password);
-                
-                if (password.length() < 8 || 
-                        !Character.isUpperCase(password.charAt(0)) || 
-                        !password.matches(".*[^a-zA-Z0-9].*")) {
+
+                if (password.length() < 8
+                        || !Character.isUpperCase(password.charAt(0))
+                        || !password.matches(".*[^a-zA-Z0-9].*")) {
                     //.* means "zero or more of any character, including blank". Giống % trong SQL. 
                     // Có cả đầu và cuối vì nó cho phép bất kì chữ nào được xuất hiện trước hoặc sau.
                     //^a-zA-Z0-9 means not a-z, A-Z, 0-9
                     //.*[!].*: 1234: false, 12!34: true
-                    errorNewPassword = "Password must be at least 8 characters long, start with a capital letter, and contain at least one special character.";
+                    errorMessage = "Password must be at least 8 characters long, start with a capital letter, and contain at least one special character.";
                 } else if (encryptedPassword.equals(existPassword)) {
-                    errorNewPassword = "Password must not match current password.";
+                    errorMessage = "Password must not match current password.";
                 } else if (!password.equals(confirmPassword)) {
-                    errorNewPassword = "Passwords do not match.";
+                    errorMessage = "Passwords do not match.";
                 } else if (!encryptedCurrentPassword.equals(existPassword)) {
-                    errorCurrentPassword = "Current password is incorrect.";
+                    errorMessage = "Current password is incorrect.";
                 } else {
                     changePasswordSuccessMessage = "Password changed successfully.";
                     Customer updateCustomer = new Customer(customer.getCustomerId(), encryptedPassword);
                     userDAO.updateUserPassword(updateCustomer);
                 }
 
-                request.setAttribute("errorCurrentPassword", errorCurrentPassword);
-                request.setAttribute("errorNewPassword", errorNewPassword);
+                request.setAttribute("errorMessage", errorMessage);
                 request.setAttribute("changePasswordSuccessMessage", changePasswordSuccessMessage);
                 request.setAttribute("action", "editPassword");
                 request.getRequestDispatcher("changePassword.jsp").forward(request, response);

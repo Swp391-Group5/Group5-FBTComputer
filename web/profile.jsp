@@ -32,7 +32,6 @@
                     <li class="breadcrumb-item active" aria-current="page"><strong>My Account</strong></li>
                 </ol>
             </nav>
-
             <hr>
             <div class="row">   
                 <!-- left column -->
@@ -52,7 +51,7 @@
                                     <i class="fa-solid fa-key"></i> Change Password
                                 </button>
                             </form>
-                                
+
                             <a href="orders.jsp" class="btn btn-block btn-light"><i class="fa fa-book"></i> My Order</a>
                             <a href="logout" class="btn btn-block btn-light"><i class="fa-solid fa-power-off"></i> <strong>Logout</strong></a>
                         </div>

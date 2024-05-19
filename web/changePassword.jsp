@@ -147,17 +147,12 @@
                     </div>
                     <% } %>
 
-                    <% if (request.getAttribute("errorCurrentPassword") != null) { %>
+                    <% if (request.getAttribute("errorMessage") != null) { %>
                     <div class="alert alert-danger" role="alert">
-                        <%= request.getAttribute("errorCurrentPassword") %>
+                        <%= request.getAttribute("errorMessage") %>
                     </div>
                     <% } %>
 
-                    <% if (request.getAttribute("errorNewPassword") != null) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= request.getAttribute("errorNewPassword") %>
-                    </div>
-                    <% } %>
                     <div class="inputDiv">
                         <label class="inputLabel" for="password">Current Password</label>
                         <div class="input-group">
