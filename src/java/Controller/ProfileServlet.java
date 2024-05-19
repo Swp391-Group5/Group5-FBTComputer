@@ -42,7 +42,7 @@ public class ProfileServlet extends HttpServlet {
         Customer customer;
         try {
             //edit
-            customer = userDAO.getCustomerById(1);
+            customer = userDAO.getCustomerById(2);
         } catch (Exception e) {
             response.sendRedirect(request.getContextPath() + "/error/error.jsp?error=" + e);
             return;
