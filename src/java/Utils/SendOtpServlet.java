@@ -79,11 +79,12 @@ public class SendOtpServlet extends HttpServlet {
         RequestDispatcher dispatcher = null;
         int otpvalue = 0;
         HttpSession mySession = request.getSession();
-
+        // For forgotpassword only
         if (customerDAO.checkEmail(email) == false) {
             request.setAttribute("Notexisted", "This email doesn't exist!");
-            request.getRequestDispatcher("profile").forward(request, response);
+            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }
+        
         if (email != null || !email.equals("")) {
             // sending otp
             Random rand = new Random();
@@ -100,7 +101,7 @@ public class SendOtpServlet extends HttpServlet {
             Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication("thongdnmhe176561@fpt.edu.vn", "babv cccv blbu tvqj");
-                    // Put email id and password here
+                    //Put email id and password here
                 }
             });
             // compose message
@@ -118,11 +119,9 @@ public class SendOtpServlet extends HttpServlet {
             }
             dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
             request.setAttribute("message", "An OTP code is sent to your email: " + email);
-            //request.setAttribute("connection", con);
             mySession.setAttribute("otp", otpvalue);
             mySession.setAttribute("email", email);
             dispatcher.forward(request, response);
-            //request.setAttribute("status", "success");
         }
     }
 
