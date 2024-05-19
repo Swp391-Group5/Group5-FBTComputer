@@ -152,7 +152,9 @@ public class ProfileServlet extends HttpServlet {
                 //encrypt newpassword
                 String encryptedPassword = Encryptor.SHA256Encryption(password);
                 
-                if (password.length() < 8 || !Character.isUpperCase(password.charAt(0)) || !password.matches(".*[^a-zA-Z0-9].*")) {
+                if (password.length() < 8 || 
+                        !Character.isUpperCase(password.charAt(0)) || 
+                        !password.matches(".*[^a-zA-Z0-9].*")) {
                     //.* means "zero or more of any character, including blank". Giống % trong SQL. 
                     // Có cả đầu và cuối vì nó cho phép bất kì chữ nào được xuất hiện trước hoặc sau.
                     //^a-zA-Z0-9 means not a-z, A-Z, 0-9
