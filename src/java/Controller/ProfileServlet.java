@@ -145,13 +145,13 @@ public class ProfileServlet extends HttpServlet {
                 String encryptedPassword = Encryptor.SHA256Encryption(password);
 
                 if (password.length() < 8
-                        || !Character.isUpperCase(password.charAt(0))
+                        || !password.matches(".*[A-Z].*")
                         || !password.matches(".*[^a-zA-Z0-9].*")) {
                     //.* means "zero or more of any character, including blank". Giống % trong SQL. 
                     // Có cả đầu và cuối vì nó cho phép bất kì chữ nào được xuất hiện trước hoặc sau.
                     //^a-zA-Z0-9 means not a-z, A-Z, 0-9
                     //.*[!].*: 1234: false, 12!34: true
-                    errorMessage = "Password must be at least 8 characters long, start with a capital letter, and contain at least one special character.";
+                    errorMessage = "Password must be at least 8 characters long, contains at least one capital letter and one special character.";
                 } else if (encryptedPassword.equals(existPassword)) {
                     errorMessage = "Password must not match current password.";
                 } else if (!password.equals(confirmPassword)) {
