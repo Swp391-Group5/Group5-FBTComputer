@@ -60,6 +60,54 @@
             input:checked + .slider:before {
                 transform: translateX(20px); /* Dịch chuyển nút tròn sang phải */
             }
+
+            /* CSS cho toggle switch */
+            .toggle-input {
+                display: none;
+            }
+
+            .toggle-label {
+                cursor: pointer;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+                background-color: #ccc;
+                border-radius: 20px;
+                position: relative;
+                transition: background-color 0.4s;
+                line-height: 34px;
+                text-align: center;
+                color: #fff;
+            }
+
+            .toggle-label::before {
+                content: "";
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: #fff;
+                top: 2px;
+                left: 2px;
+                transition: transform 0.4s;
+            }
+
+            .toggle-input:checked + .toggle-label {
+                background-color: green;
+            }
+
+            .toggle-input:checked + .toggle-label::before {
+                transform: translateX(26px);
+            }
+
+            .search-toggle {
+                margin-bottom: 20px;
+            }
+            /* CSS cho chế độ tối */
+            .dark-mode {
+                background-color: beige;
+                color: #0277b7
+            }
         </style>
 
     </head>
@@ -73,27 +121,30 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link active" href="list-cate">List Category</a>
                     <a class="nav-item nav-link" href="AddCategory.jsp">Add Category</a>
+
                 </div>
             </div>
         </nav>
-
+        <h3 class="text-center mb-4">Category List</h3>
         <div class="container">
-            <h3 class="text-center mb-4">Category List</h3>
+
+
             <div class="d-flex justify-content-between mb-3">
                 <div id="categoryTable_length" class="dataTables_length"></div>
                 <div id="categoryTable_filter" class="dataTables_filter"></div>
+                <div class="search-toggle">
+                    <input type="checkbox" id="searchToggle" class="toggle-input">
+                    <label for="searchToggle" class="toggle-label">Toggle Search</label>
+                    <form action="excel-cate" method="get"> 
+                        <button type="submit" class="mb-0 text-center btn btn-primary">Xuất file Excel</button> 
+                    </form> 
+                </div>
             </div>
-            <!-- Search Form -->
-            <!--            <form action="list-cate" method="get" class="form-inline mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search by category name" aria-label="Search" value="${param.search}">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </div>
-                            </div>
-                        </form>-->
-
-            <!-- Table -->
+            <c:if test="${mess!=null }">
+                <div class="alert alert-success" role="alert">
+                    ${mess}
+                </div>
+            </c:if>
             <table id="categoryTable" class="table table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>
@@ -168,6 +219,23 @@
                                                     "lengthMenu": [5, 10, 15, 20] // Number of records per page options
                                                 });
                                             });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Lắng nghe sự kiện thay đổi của toggle input
+                const toggleInput = document.querySelector('.toggle-input');
+                toggleInput.addEventListener('change', function () {
+                    // Lấy trạng thái của toggle (checked hoặc không)
+                    const isChecked = toggleInput.checked;
+
+                    // Thay đổi giao diện của trang dựa trên trạng thái của toggle
+                    if (isChecked) {
+                        document.body.classList.add('dark-mode'); // Thêm lớp dark-mode khi bật toggle
+                    } else {
+                        document.body.classList.remove('dark-mode'); // Loại bỏ lớp dark-mode khi tắt toggle
+                    }
+                });
+            });
         </script>
     </body>
 </html>

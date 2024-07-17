@@ -4,9 +4,48 @@
         <servlet-name>HomeControl</servlet-name>
         <servlet-class>controller.HomeControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartControl</servlet-name>
+        <servlet-class>Cart.CartControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartProcess</servlet-name>
+        <servlet-class>Cart.CartProcess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartCheck</servlet-name>
+        <servlet-class>Cart.CartCheck</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutControl</servlet-name>
+        <servlet-class>Chackout.CheckoutControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderProcessControl</servlet-name>
+        <servlet-class>Cart.OrderProcessControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
- 
+    <servlet-mapping>
+        <servlet-name>CartControl</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartProcess</servlet-name>
+        <url-pattern>/cartprocess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutControl</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartCheck</servlet-name>
+        <url-pattern>/cartcheck</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderProcessControl</servlet-name>
+        <url-pattern>/orderprocess</url-pattern>
+    </servlet-mapping>
 </web-app>

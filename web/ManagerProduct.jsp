@@ -151,14 +151,15 @@
             <jsp:include page="includes/head.jsp"></jsp:include>--%>
         <div class="container">
             <div class="table-wrapper">
-                <div class="table-title bg-pink text-center">
+                <div class="table-title bg-primary text-center">
                     <div class="row">
                         <div class="col-12">
                             <h2>Manage <b>Product</b></h2>
                         </div>
                         <div class="col-md-12">
-                            <a href="#addProductModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
+                            <a href="AddProduct.jsp" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
                         </div>
+
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
@@ -175,13 +176,17 @@
                             <th>Modified By</th>
                             <th>Modified Date</th>
                             <th>Category</th>
-                            <th>Actions</th>
+                            <th>Status</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${listP}" var="o">
                             <tr>
-                                <td>${o.productId}</td>
+                                
+                                <td><a href="edit-product?pid=${o.productId}">
+                                    ${o.productId}
+                                    </a></td>
                                 <td>${o.productName}</td>
                                 <td>${o.productPrice}</td>
 
@@ -197,11 +202,11 @@
                                     <a href="toggleProductStatus?pid=${o.productId}&status=${o.productStatus}"  class="edit" data-toggle="modal">
                                         <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                         <button class="toggle-status btn ${o.productStatus ? 'btn-success' : 'btn-danger'}" 
-                                          >
-                                        ${o.productStatus ? 'On' : 'Off'}
-                                    </button>
+                                                >
+                                            ${o.productStatus ? 'On' : 'Off'}
+                                        </button>
                                     </a>
-                                    
+
                                 </td>
                             </tr>
                         </c:forEach>
@@ -225,81 +230,81 @@
             </div>
             <a href="home" class="btn btn-primary mt-3">Back to home</a>
         </div>
-        <!-- Edit Modal HTML -->
-        <div id="addProductModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="add" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Add Product</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input name="productName" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="productDescription" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input name="productPrice" type="number" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantity</label>
-                                <input name="productQuantity" type="number" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Brand</label>
-                                <input name="productBrand" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Image</label>
-                                <input name="productImage" type="file" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="category" class="form-control">
-                                    <c:forEach items="${categories}" var="category">
-                                        <option value="${category.id}">${category.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Specification</label>
-                                <textarea name="specification" class="form-control" required></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-<script>
-function toggleStatus(productId, currentStatus) {
-    var newStatus = !currentStatus;
-    fetch('toggleProductStatus', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ productId: productId, productStatus: newStatus })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload(); // Reload the page to update the status
-        } else {
-            alert('Failed to update status');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-</script>
+        <!--         Edit Modal HTML 
+                <div id="addProductModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="add" method="post">
+                                <div class="modal-header">						
+                                    <h4 class="modal-title">Add Product</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">					
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input name="productName" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="productDescription" class="form-control" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input name="productPrice" type="number" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input name="productQuantity" type="number" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Brand</label>
+                                        <input name="productBrand" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <input name="productImage" type="file" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select name="category" class="form-control">
+        <c:forEach items="${categories}" var="category">
+            <option value="${category.id}">${category.name}</option>
+        </c:forEach>
+    </select>
+</div>
+<div class="form-group">
+    <label>Specification</label>
+    <textarea name="specification" class="form-control" required></textarea>
+</div>
+</div>
+<div class="modal-footer">
+<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+<input type="submit" class="btn btn-success" value="Add">
+</div>
+</form>
+</div>
+</div>
+</div>-->
+        <script>
+            function toggleStatus(productId, currentStatus) {
+                var newStatus = !currentStatus;
+                fetch('toggleProductStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({productId: productId, productStatus: newStatus})
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                location.reload(); // Reload the page to update the status
+                            } else {
+                                alert('Failed to update status');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+            }
+        </script>
     </body>
 </html>

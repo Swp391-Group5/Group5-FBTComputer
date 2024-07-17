@@ -10,9 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Account Details</title>
-        <link rel="icon" href="images/person.png"
-              type="images/x-icon"/>
-        <%@include file="includes/head.jsp" %>
+        <%@include file="/includes/head.jsp" %>
         <style>
             .custom-file-upload input[type="file"] {
                 display: none;
@@ -24,6 +22,7 @@
     </head>
     <body>
         <%@include file="includes/navbar.jsp"%>
+        <br/>
         <br/>
         <br/>
         <br/>
@@ -44,17 +43,17 @@
                         <c:choose>
                             <c:when test="${customerAvatar != null || adminAvatar != null}">
                                 <c:choose>
-                                    <c:when test="${sessionScope.admin != null}">
+                                    <c:when test="${sessionScope.admin != null && admin.adminAvatar != null}">
                                         <c:set var="imageUrl" value="${contextPath}/processImage?id=${sessionScope.admin.adminId}" />
                                     </c:when>
-                                    <c:when test="${sessionScope.customer != null}">
+                                    <c:when test="${sessionScope.customer != null && customer.customerAvatar != null }">
                                         <c:set var="imageUrl" value="${contextPath}/processImage?id=${sessionScope.customer.customerId}" />
                                     </c:when>
                                 </c:choose>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${admin.adminAvatar == null || customer.customerAdmin == null}">
                                 <c:set var="imageUrl" value="${contextPath}/assets/images/avatarMain.jpg" />
-                            </c:otherwise>
+                            </c:when>
                         </c:choose>
 
                         <img src="${imageUrl}"
@@ -80,7 +79,12 @@
                             </form>
 
                             <form action="<%=request.getContextPath()%>/sendOtp" method="post" class="mt-2 mb-2">
-                                <input type="hidden" name="email" value="${customer.customerEmail}">
+                                <c:if test="${sessionScope.admin != null}">
+                                    <input type="hidden" name="email" value="${admin.adminEmail}">
+                                </c:if>
+                                <c:if test="${sessionScope.customer != null}">
+                                    <input type="hidden" name="email" value="${customer.customerEmail}">
+                                </c:if>
                                 <input type="hidden" name="action" value="change">
                                 <button type="submit" class="btn btn-block btn-light">
                                     <i class="fa-solid fa-key"></i> Change Password
@@ -94,31 +98,9 @@
 
                 <!-- edit form column -->
                 <div class="col-md-9 personal-info">
-
-
-
-
                     <h3 class="card-text"><strong>Account</strong> Customer</h3>
-
-
-
                     <c:if test="${requestScope.action == 'view'}">
-                        <c:set var="customer" value="${requestScope.customer}"/>
                         <form id="form-1" action="profile" method="post" class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label input_type">AccountID:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control input_type" type="text" name="accountId" 
-                                           <c:choose>
-                                               <c:when test="${not empty customer}">
-                                                   value="${customer.customerId}"
-                                               </c:when>
-                                               <c:when test="${not empty admin}">
-                                                   value="${admin.adminId}"
-                                               </c:when>
-                                           </c:choose> readonly>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email:</label>
                                 <div class="col-lg-8">
@@ -148,7 +130,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Gender</label>
+                                <label class="col-lg-3 control-label">Gender:</label>
                                 <div class="col-lg-8">
                                     <c:choose>
                                         <c:when test="${customer.customerGender}">
@@ -232,20 +214,6 @@
                     <c:if test="${requestScope.action == 'editInfo'}">
                         <c:set var="customer" value="${requestScope.customer}"/>
                         <form id="form-1" action="profile" method="get" class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label input_type">AccountID:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control input_type" type="text" name="accountId"
-                                           <c:choose>
-                                               <c:when test="${not empty customer}">
-                                                   value="${customer.customerId}"
-                                               </c:when>
-                                               <c:when test="${not empty admin}">
-                                                   value="${admin.adminId}"
-                                               </c:when>
-                                           </c:choose> readonly>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email:</label>
                                 <div class="col-lg-8">
@@ -424,6 +392,11 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <%@include file="includes/finish.jsp"%>                    
         <%@include file="includes/footer.jsp"%>
 

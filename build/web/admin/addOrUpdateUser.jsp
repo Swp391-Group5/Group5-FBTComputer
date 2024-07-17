@@ -12,7 +12,7 @@
     <head>
         <%@include file="/includes/head.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add or update employee</title>
+        <title>Add New User</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -63,7 +63,7 @@
                 <div class="container mt-5">
                     <div class="row justify-content-center">
                         <div class="col-md-6">
-                            <form action="<%=request.getContextPath()%>/userManager?action=add" method="post">
+                            <form action="<%=request.getContextPath()%>/sendPasswordEmail" method="post">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email:</label>
                                     <% if (request.getAttribute("errorEmailExist") != null) { %>
@@ -72,15 +72,6 @@
                                     </div>
                                     <% } %>
                                     <input type="email" class="form-control" id="email" name="email" value="${acrError.email}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="accountId" class="form-label">Password:</label>
-                                    <% if (request.getAttribute("errorPassword") != null) { %>
-                                    <div class="alert alert-danger" role="alert">
-                                        <%= request.getAttribute("errorPassword") %>
-                                    </div>
-                                    <% } %>
-                                    <input type="text" class="form-control" id="password" name="password" value="${acrError.password}" required >
                                 </div>
                                 <div class="mb-3">
                                     <label for="accountName" class="form-label">Account Name:</label>

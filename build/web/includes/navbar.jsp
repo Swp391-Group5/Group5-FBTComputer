@@ -38,14 +38,15 @@
             <li class="nav-item m-auto"><a class="nav-link text-white" href="home"><i class="fas fa-house"></i> <strong>Home page </strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="blog"><i class="fas fa-newspaper"></i> <strong>Blog </strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="blog"><i class="fas fa-shield-halved"></i> <strong>Warranty </strong></a></li>
-            <li class="nav-item m-auto"><a class="nav-link text-white" href="contacUs.jsp"><i class="fas fa-phone"></i> <strong>Contact Us </strong></a></li>
+            <li class="nav-item m-auto"><a class="nav-link text-white" href="contact.jsp"><i class="fas fa-phone"></i> <strong>Contact Us </strong></a></li>
         </ul>
-        <form action="search" method="post" class="my-2 my-lg-0 ms-3 d-flex justify-content-center">
+
+        <form action="search"  class="my-2 my-lg-0 ms-3 d-flex justify-content-center">
             <div class="input-group input-group-sm">
-                <input oninput="searchByName(this)" value="" name="txt"
-                       type="text" class="form-control py-1 ps-2 pe-5 h-auto rounded"
+                <input name="productName" type="text" value="${pi}" class="form-control py-1 ps-2 pe-5 h-auto rounded"
                        placeholder="Search...">
                 <div class="input-group-append">
+
                     <button type="submit" class="btn btn-outline-light btn-number mr-3 px-3">
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </button>

@@ -1,16 +1,10 @@
-<%-- 
-    Document   : employeeManager
-    Created on : Feb 19, 2024, 9:24:13 AM
-    Author     : Admin
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Employee Manager</title>
+        <title>User Manager</title>
         <%@include file="/includes/head.jsp" %>
 
 
@@ -151,7 +145,7 @@
         <%@include file="/includes/adminNavbar.jsp"%>
         <br/>
         <div class="displayCenter"></div>
-        <h1 style="text-align: center">User's Details</h1>
+        <h1 style="text-align: center">User Manager</h1>
         <div class="container-xl">
             <div class="table-responsive">
                 <div class="table-wrapper"> 
@@ -215,29 +209,38 @@
                         </div>
                     </div>
                     <div class="row flex-row-reverse">
-                        <div class="col-sm-4">
+                        <div class="col-sm-1">
                             <div  >
-                                <a href="<%=request.getContextPath()%>/ImportExportUser"><button type="button" class="btn btn-primary mb-3">Import/Export user list</button></a>
                                 <a href="<%=request.getContextPath()%>/userManager?action=add0"><button type="button" class="btn btn-primary mb-3">Add new user</button></a>
                             </div>
                         </div>
                     </div>
                     <c:set var="loggedInAdminId" value="${sessionScope.loggedInAdminId}" />
-                    <form id="myform" action="userManager">
-                        <label for="page-size-select" class="ps-3">Users per page:</label>
-                        <select name="pageSize" id="page-size-select" onchange="document.getElementById('myform').submit()">>
-                            <option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
-                            <option  value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-                            <option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-                            <option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
-                            </select>
-                            <noscript>
-                            <button type="submit"  value="Go" >
-                                Go
-                            </button>
-                            </noscript>
-                        </form>
-                        <table class="table table-striped table-hover table-bordered">
+                    <c:if test="${main != null}">
+                        <form id="myform" action="userManager">
+                            <div class="row d-flex align-items-center">
+                                <label for="page-size-select" class="ps-3"><strong>Products per page:</strong></label>
+                                <div class="col-md-1 mb-3">
+                                    <select class="form-select" name="pageSize" id="page-size-select" onchange="document.getElementById('myform').submit()">>
+                                        <option value="5" <c:if test="${pageSize == 5}">selected</c:if>>5</option>
+                                        <option value="10" <c:if test="${pageSize == 10}">selected</c:if>>10</option>
+                                        <option value="15" <c:if test="${pageSize == 15}">selected</c:if>>15</option>
+                                        <option value="20" <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+                                        </select>
+                                        <noscript>
+                                        <button type="submit"  value="Go" >
+                                            Go
+                                        </button>
+                                        </noscript>
+                                    </div>
+                                </div>
+                            </form>
+                    </c:if>
+                    <table class="table table-striped table-hover table-bordered">
+                        <c:if test="${requestScope.listOfACR == null || requestScope.listOfACR.size() == 0}">
+                            <h1 style="text-align: center">List Empty</h1>
+                        </c:if>
+                        <c:if test="${requestScope.listOfACR != null && requestScope.listOfACR.size() > 0}">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -253,12 +256,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:if test="${requestScope.listOfACR != null}">
                                 <c:forEach items="${requestScope.listOfACR}" var="i" varStatus="loop">
                                     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
                                     <c:choose>
                                         <c:when test="${i.avatar != null}">
-                                            <c:set var="imageUrl" value="${contextPath}/processImageList?id=${i.id}&roleId=${i.roleId}" />
+                                            <c:set var="imageUrl" value="${contextPath}/processImageUserList?id=${i.id}&roleId=${i.roleId}" />
                                         </c:when>
                                         <c:otherwise>
                                             <c:set var="imageUrl" value="${contextPath}/assets/images/avatarMain.jpg" />
@@ -315,19 +317,38 @@
                             </c:if>
                         </tbody>
                     </table>
+                    <c:if test="${main != null}">
+                        <div>
+                            <p>Showing ${start} to ${end} of ${totalProducts} entries</p>
+                        </div>
+                        <ul class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item">
+                                    <a class="page-link" href="userManager?pageSize=${pageSize}&index=${currentPage - 1}" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                            </c:if>
+
+                            <c:forEach begin="1" end="${num}" var="i">
+                                <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                    <a class="page-link" href="userManager?pageSize=${pageSize}&index=${i}">${i}</a>
+                                </li>
+                            </c:forEach>
+
+                            <c:if test="${currentPage < num}">
+                                <li class="page-item">
+                                    <a class="page-link" href="userManager?pageSize=${pageSize}&index=${currentPage + 1}" aria-label="Next">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </c:if>
                 </div>  
             </div> 
         </div>
         <script>
-
-//            document.getElementById('search-addon').addEventListener('click', function () {
-//                var searchInputValue = document.getElementById('searchInput').value;
-//                var searchCriteriaValue = document.getElementById('searchCriteria').value;
-//                var contextPath = '<%=request.getContextPath()%>';
-//                var searchLink = document.getElementById('searchLink');
-//                searchLink.href = contextPath + '/userManager?action=search&query=' + encodeURIComponent(searchInputValue) + '&criteria=' + encodeURIComponent(searchCriteriaValue);
-//            });
-
         </script>
         <%@include file="/includes/footer.jsp"%>
     </body>

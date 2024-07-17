@@ -131,12 +131,12 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item text-white <c:if test='${view == "0"}'>active</c:if>'">
-                    <a href="category?categoryId=0">All</a>
+                    <a href="home?categoryId=0">All</a>
                 </li>
             <c:forEach items="${listC}" var="category">
                 <c:if test="${category.categoryStatus == 1}">
                     <li class="list-group-item text-white <c:if test='${category.categoryId == view}'>active</c:if>'">
-                        <a href="category?categoryId=${category.categoryId}" <c:if test='${category.categoryId == view}'>class="text-danger"</c:if>>${category.categoryName}</a>
+                        <a style="<c:if test='${requestScope.categoryId == category.categoryId}'>color:red;font-style:italic;"</c:if>" href="home?categoryId=${category.categoryId}" <c:if test='${category.categoryId == view}'>class="text-danger"</c:if>>${category.categoryName}</a>
                         </li>
                 </c:if>
             </c:forEach>
@@ -148,9 +148,9 @@
     <h2 class="pt-2 mb-4">Filters</h2>
     <section class="mb-4">
         <div class="d-flex justify-content-between align-items-center mt-0">
-            <form action="search" method="post" class="d-flex">
+            <form action="home"  class="d-flex">
                 <div class="input-group">
-                    <input name="productName" type="text" value="${pi}" class="form-control" aria-label="Search" placeholder="Search...">
+                    <input name="productName" type="text" value="${productName}" class="form-control" aria-label="Search" placeholder="Search...">
                     <button type="submit" class="btn btn-secondary">
                         <i class="fa fa-search"></i>
                     </button>
@@ -160,26 +160,26 @@
     </section>
 
     <label for="sortBy" style=" font-family: inherit"><h3>Sort by (Price)</h3></label>
-    <form action="home" method="post" class="mb-3" style="border: none; margin: 0; padding: 0;">
+    <form action="home" class="mb-3" style="border: none; margin: 0; padding: 0;">
         <div class="d-flex align-items-center">
-            <select id="sortBy" name="sortBy" class="form-select text-success" style="max-width: 200px; border: 1px solid green; border-radius: 5px;">
-                <option value="Default" ${empty param.sortBy ? 'selected' : ''}>default</option>
-                <option value="AToZ" ${param.sortBy == 'AToZ' ? 'selected' : ''}>a to z</option>
-                <option value="ZToA" ${param.sortBy == 'ZToA' ? 'selected' : ''}>z to a</option>
-                <option value="LowToHigh" ${param.sortBy == 'LowToHigh' ? 'selected' : ''}>low to high</option>
-                <option value="HighToLow" ${param.sortBy == 'HighToLow' ? 'selected' : ''}>high to low</option>
-
+            <select id="sort" name="sortBy" class="form-select text-success" style="max-width: 200px; border: 1px solid green; border-radius: 5px;">
+                <option value="0" ${sortBy == 0 ? 'selected' : ''}>Default</option>
+                <option value="1" ${sortBy == 1 ? 'selected' : ''}>Low to High</option>
+                <option value="2" ${sortBy == 2 ? 'selected' : ''}>High to Low</option>
+                <option value="3" ${sortBy == 3 ? 'selected' : ''}>A to Z</option>
+                <option value="4" ${sortBy == 4 ? 'selected' : ''}>Z to A</option>
             </select>
             <button type="submit" class="btn text-white ms-2" style="background-color: #f64876; border-radius: 5px;">
                 Sort
             </button>
         </div>
     </form>
+
     <span class="hr"><hr></span>    
     <section class="mb-4">
 
         <h2>Brands</h2>
-        <form action="filter-brand" method="post" id="searchForm" >
+        <form action="home"  id="searchForm" >
             <div class="brand-checkbox">
                 <input type="checkbox" id="asus" name="brand" value="Asus">
                 <label for="asus">Asus</label>
@@ -201,12 +201,12 @@
                 <div class="price-input">
                     <div class="price-field">
                         <span>Minimum Price</span> <br>
-                        <input type="number" class="min-input" value="${minPrice}">
+                        <input type="number" class="min-input" value="0">
                     </div>
                     <br>
-                    <div class="price-field" >
+                    <div class="price-field">
                         <span>Maximum Price</span>
-                        <input type="number" class="max-input" value="${maxPrice}">
+                        <input type="number" class="max-input" value="100000000">
                     </div>
                 </div>
                 <div class="slider-container">
@@ -218,11 +218,9 @@
 
             <!-- Slider -->
             <div class="range-input">
-                <form id="priceRangeForm"  action="sort-range" method="post">
-                    <input type="range" class="min-range" name="minRange" min="1000000" max="100000000" value="${minPrice}" step="1000000">
-                    <input type="range" class="max-range" name="maxRange" min="1000000" max="100000000" value="${maxPrice}" step="1000000">
-
-
+                <form id="priceRangeForm" action="home" method="GET">
+                    <input type="range" class="min-range" name="minRange" min="0" max="100000000" value="0" step="1000000">
+                    <input type="range" class="max-range" name="maxRange" min="0" max="100000000" value="100000000" step="1000000">
                     <input type="submit" value="Submit">
                 </form>
             </div>
@@ -240,25 +238,62 @@
                 }
             });
         });
-// Lắng nghe sự kiện khi giá trị của thanh trượt hoặc ô nhập thay đổi
-        document.querySelectorAll('.min-input, .max-input, .min-range, .max-range').forEach(function (element) {
-            element.addEventListener('input', function () {
-                var minInput = document.querySelector('.min-input');
-                var maxInput = document.querySelector('.max-input');
-                var minRange = document.querySelector('.min-range');
-                var maxRange = document.querySelector('.max-range');
+        const minInput = document.querySelector('.min-input');
+        const maxInput = document.querySelector('.max-input');
+        const minRange = document.querySelector('.min-range');
+        const maxRange = document.querySelector('.max-range');
 
-                // Cập nhật giá trị của ô nhập khi giá trị của thanh trượt thay đổi
-                minInput.value = minRange.value;
-                maxInput.value = maxRange.value;
-
-                // Cập nhật giá trị của thanh trượt khi giá trị của ô nhập thay đổi
-                minRange.value = minInput.value;
-                maxRange.value = maxInput.value;
-            });
+        minInput.addEventListener('input', () => {
+            minRange.value = minInput.value;
         });
 
+        maxInput.addEventListener('input', () => {
+            maxRange.value = maxInput.value;
+        });
+
+        minRange.addEventListener('input', () => {
+            minInput.value = minRange.value;
+        });
+
+        maxRange.addEventListener('input', () => {
+            maxInput.value = maxRange.value;
+        });
+
+        minInput.addEventListener('input', () => {
+            if (parseInt(minInput.value) > parseInt(maxInput.value)) {
+                minInput.value = maxInput.value;
+            }
+            minRange.value = minInput.value;
+        });
+
+        maxInput.addEventListener('input', () => {
+            if (parseInt(maxInput.value) < parseInt(minInput.value)) {
+                maxInput.value = minInput.value;
+            }
+            maxRange.value = maxInput.value;
+        });
+
+        minRange.addEventListener('input', () => {
+            if (parseInt(minRange.value) > parseInt(maxRange.value)) {
+                minRange.value = maxRange.value;
+            }
+            minInput.value = minRange.value;
+        });
+
+        maxRange.addEventListener('input', () => {
+            if (parseInt(maxRange.value) < parseInt(minRange.value)) {
+                maxRange.value = minRange.value;
+            }
+            maxInput.value = maxRange.value;
+        });
+
+
+        function syncInputs() {
+            document.querySelector('.min-range').value = document.querySelector('.min-input').value;
+            document.querySelector('.max-range').value = document.querySelector('.max-input').value;
+        }
     </script>
+
 </div>
 
 
