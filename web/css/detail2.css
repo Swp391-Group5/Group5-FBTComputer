@@ -1,8 +1,8 @@
 /*
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
+
+ 
     Created on : Jun 1, 2024, 9:23:49 PM
     Author     : admin
 */
@@ -75,12 +75,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-top: 1px solid rgba(0, 0, 0, .1)
 }
 .product-description {
-    white-space: pre-line; /* Preserves white space and line breaks */
+    white-space: pre-line;  
 }
 
 .product-description .product_info {
     display: block;
-    margin-bottom: 1em; /* Adds space between paragraphs */
+    margin-bottom: 1em; 
 }
 
 
