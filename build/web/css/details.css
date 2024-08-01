@@ -1,0 +1,86 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Feb 5, 2024, 11:26:40 AM
+    Author     : admin
+*/body{
+    background-color: #000
+}
+.card{
+    border:none
+}
+.product{
+    background-color: #eee
+}
+.brand{
+    font-size: 13px
+}
+.act-price{
+    color:red;
+    font-weight: 700
+}
+.dis-price{
+    text-decoration: line-through
+}
+.about{
+    font-size: 14px
+}
+.color{
+    margin-bottom:10px
+}
+label.radio{
+    cursor: pointer
+}
+label.radio input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+label.radio span{
+    padding: 2px 9px;
+    border: 2px solid #ff0000;
+    display: inline-block;
+    color: #ff0000;
+    border-radius: 3px;
+    text-transform: uppercase
+}
+label.radio input:checked+span{
+    border-color: #ff0000;
+    background-color: #ff0000;
+    color: #fff
+}
+.btn-danger{
+    background-color: #ff0000 !important;
+    border-color: #ff0000 !important
+}
+.btn-danger:hover{
+    background-color: #da0606 !important;
+    border-color: #da0606 !important
+}
+.btn-danger:focus{
+    box-shadow: none
+}
+.cart i{
+    margin-right: 10px
+}
+.product h5 {
+    color: #333; /* Adjust the color as needed */
+}
+
+.product p.about {
+    color: #555; /* Adjust the color as needed */
+}
+
+.product .price {
+    color: #e44d26; /* Adjust the color as needed */
+}
+
+.sizes h6 {
+    color: #555; /* Adjust the color as needed */
+}
+
+
