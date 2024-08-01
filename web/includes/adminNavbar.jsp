@@ -44,10 +44,11 @@
             <li class="nav-item m-auto"><a class="nav-link text-white" href="list-cate"><i class="fas fa-list-alt"></i> <strong>Category Manager </strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="slider-list"><i class="fas fa-images"></i> <strong>Slider Manager </strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="managerBlog"><i class="fa-solid fa-cart-shopping"></i> <strong>Blogs Manager </strong></a></li>
-            <li class="nav-item m-auto"><a class="nav-link text-white" href="ManageWarranty"><i class="fa-solid fa-user-gear"></i> <strong>Manager Warranty </strong></a></li>
+            <li class="nav-item m-auto"><a class="nav-link text-white" href="ManageWarranty"><i class="fa-solid fa-user-gear"></i> <strong>Warranty Manager</strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="userManager"><i class="fa-solid fa-user-gear"></i> <strong>User Manager </strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="orderManager"><i class="fa-solid fa-user-gear"></i> <strong>Order Manager </strong></a></li>
             <li class="nav-item m-auto"><a class="nav-link text-white" href="adminFeedbackManager"><i class="fa-solid fa-comments"></i> <strong>Feedback Manager</strong></a></li>
+            <li class="nav-item m-auto"><a class="nav-link text-white" href="product-quality"><i class="fa-solid fa-file-lines"></i> <strong>Product Quality</strong></a></li>
         </ul>
         <form action="search" method="post" class="my-2 my-lg-0 ms-3 d-flex justify-content-center">
             <ul class="navbar-nav m-2">
