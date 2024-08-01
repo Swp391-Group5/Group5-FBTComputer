@@ -62,7 +62,7 @@ public class ExcelBlog extends HttpServlet {
         BlogDAO bdao = new BlogDAO();
         List<Blog> list = bdao.getAllSlidersByCategory1();
            // Đường dẫn nơi lưu file tạm thời
-   String filePath = "C:\\Users\\admin\\Downloads\\chip\\"; // Thay đổi đường dẫn lưu file tùy vào hệ thống của bạn
+   String filePath = "C:\\Users\\hungp\\Downloads\\chip\\"; // Thay đổi đường dẫn lưu file tùy vào hệ thống của bạn
     String fileName = "blogs.xlsx";
     String fullPath = filePath + fileName;
 

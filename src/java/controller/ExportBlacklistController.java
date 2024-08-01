@@ -24,7 +24,7 @@ public class ExportBlacklistController extends HttpServlet {
         List<ProductQuality> blacklist = dao.getBlacklist();
 
         // Path to save the Excel file
-        String filePath = "C:\\Users\\admin\\Downloads\\chip\\";
+        String filePath = "C:\\Users\\hungp\\Downloads\\chip\\";
         String fileName = "blacklist.xlsx";
         String fullPath = filePath + fileName;
 

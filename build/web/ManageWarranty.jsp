@@ -206,9 +206,7 @@
                                         <td>${i.phoneNumber}</td>
                                         <td>${i.email}</td>
                                         <td>${i.productName}</td>
-                                        <td><img style="width: 100%" src="UPLOAD_IMAGE/${i.warrantyImage}" alt="${i.productName}"></td>
-
-
+                                        <td><img style="width: 100%" src="UPLOAD_IMAGE2/${i.warrantyImage}" alt="${i.productName}"></td>
 
                                         <td>${i.warrantyPeriod}</td>
                                         <td>${i.causeError}</td>

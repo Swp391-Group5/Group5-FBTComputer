@@ -191,7 +191,7 @@ public class WarrantyPDFServlet extends HttpServlet {
         html.append("<td>").append(warranty.getSerialNumber()).append("</td>");
         html.append("<td>").append(warranty.getProductName()).append("</td>");
         html.append("<td>").append(warranty.getCauseError()).append("</td>");
-        html.append("<td>").append("<img style=\"width: 100%\" src=\"").append(convertImageToBase64(request.getServletContext().getRealPath("/UPLOAD_IMAGE/" + warranty.getWarrantyImage()))).append("\" alt=\"").append(warranty.getProductName()).append("\">").append("</td>");
+        html.append("<td>").append("<img style=\"width: 100%\" src=\"").append(convertImageToBase64(request.getServletContext().getRealPath("/UPLOAD_IMAGE2/" + warranty.getWarrantyImage()))).append("\" alt=\"").append(warranty.getProductName()).append("\">").append("</td>");
 
         html.append("<td>12</td>"); // Assuming a fixed value for the example
         html.append("<td>Trong thời hạn</td>"); // Assuming a fixed value for the example

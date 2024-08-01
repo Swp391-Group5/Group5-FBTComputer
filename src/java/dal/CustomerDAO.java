@@ -995,7 +995,7 @@ public class CustomerDAO extends DBContext {
 
     public static void main(String[] args) throws SQLException {
         CustomerDAO customerDAO = new CustomerDAO();
-        String email = customerDAO.getCustomerEmail(1);
+        boolean email = customerDAO.checkEmail("dawdwadawdwa");
         System.out.println(email);
     }
 }

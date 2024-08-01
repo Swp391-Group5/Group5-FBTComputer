@@ -72,13 +72,12 @@
                                 next page</li>
                         </ol>
                     </div>
-                    <form class="card mt-4" action="sendOtp" method="POST">
+                    <form class="card mt-4" action="sendOtpResetPass" method="POST">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="email-for-pass">Enter your email address</label>
                                 <input class="form-control" type="email" name="email" id="email-for-pass" 
                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
-                                <input type="hidden" name="action" value="forgot">
                                 <small
                                     class="form-text text-muted">Enter the registered email address . Then we'll
                                     email a OTP to this address.

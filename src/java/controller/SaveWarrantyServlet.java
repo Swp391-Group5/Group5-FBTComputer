@@ -19,6 +19,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import model.Admin;
 import model.Customer;
 
 /**
@@ -59,9 +60,10 @@ public class SaveWarrantyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-             HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
             Customer cus = (Customer) session.getAttribute("customer");
-            int orderHistoryDetailId = Integer.parseInt(request.getParameter("orderHistoryDetailId"));            
+            Admin admin = (Admin) session.getAttribute("admin");
+            int orderHistoryDetailId = Integer.parseInt(request.getParameter("orderHistoryDetailId"));
             String serialNumber = request.getParameter("serialNumber");
             String causeError = request.getParameter("textInput");
             String phoneNumber = request.getParameter("phoneNumber");
@@ -82,7 +84,7 @@ public class SaveWarrantyServlet extends HttpServlet {
                     long fileSize = part.getSize();
                     String fileName = extractFileName(part);
                     String extension = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
-
+                    
                     // Kiểm tra phần mở rộng tệp
                     if (extension.equals(".jpg") || extension.equals(".jpeg") || extension.equals(".png")) {
                         // Kiểm tra kích thước tệp
@@ -107,19 +109,27 @@ public class SaveWarrantyServlet extends HttpServlet {
                     }
                 }
             }
-            String userName = cus.getCustomerName();
-            int userID = cus.getCustomerId();
+            String userName = null;
+            int userID = 0;
+            if (cus != null) {
+                userName = cus.getCustomerName();
+                userID = cus.getCustomerId();
+            } else if (admin != null) {
+                userName = admin.getAdminName();
+                userID = admin.getAdminId();
+            }
             // Lấy ngày hiện tại và định dạng nó
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String PeriodDate = sdf.format(new Date());            
+            String PeriodDate = sdf.format(new Date());
             WarrantyDAO wdao = new WarrantyDAO();
-                        wdao.saveWarranty(productName, img, PeriodDate, orderHistoryDetailId, userName, userID, phoneNumber, email, serialNumber, causeError);
-            
+            wdao.saveWarranty(productName, img, PeriodDate, orderHistoryDetailId, userName, userID, phoneNumber, email, serialNumber, causeError);
+
         } catch (Exception e) {
         }
         response.sendRedirect("home");
     }
-     private String extractFileName(Part part) {
+
+    private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
         for (String s : items) {

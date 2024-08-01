@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="./blogCss/stylez.css"/>
     </head>
     <body class="sb-nav-fixed">
+        
         <div id="layoutSidenav">
             <div class="groundy" id="layoutSidenav_content">
                 <h2 class="title-order">Product Quality Assessment</h2>
@@ -37,6 +38,7 @@
                 <table class="table table-striped table-bordered" id="sortTable">
                     <thead>
                         <tr>
+                            <th>Product Name</th>
                             <th>User Name</th>
                             <th>Warranty Count</th>
                             <th>Warranty Ratio (%)</th>
@@ -47,6 +49,7 @@
                         <c:forEach items="${productQualityList}" var="pq">
                             <tr>
                                 <td>${pq.productName}</td>
+                                <td>${pq.userName}</td>
                                 <td>${pq.warrantyCount}</td>
                                 <td>${pq.warrantyRatio}</td>
                                 <td>${pq.status}</td>

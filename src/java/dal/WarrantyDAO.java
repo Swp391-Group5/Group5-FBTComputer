@@ -26,17 +26,18 @@ import model.Warranty;
 public class WarrantyDAO extends DBContext {
     public List<ProductQuality> getProductQualityList() {
         List<ProductQuality> list = new ArrayList<>();
-        String query = "SELECT UserName, COUNT(*) AS WarrantyCount, "
+        String query = "SELECT ProductName, UserName, COUNT(*) AS WarrantyCount, "
                      + "(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Warranty)) AS WarrantyRatio, "
                      + "CASE WHEN COUNT(*) >= 3 THEN 'Blacklist' ELSE 'Normal' END AS Status "
                      + "FROM Warranty "
-                     + "GROUP BY UserName";
+                     + "GROUP BY ProductName, UserName";
         try (Connection conn = DBContext();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 ProductQuality pq = new ProductQuality();
-                pq.setProductName(rs.getString("UserName"));
+                pq.setProductName(rs.getString("ProductName"));
+                pq.setUserName(rs.getString("UserName"));
                 pq.setWarrantyCount(rs.getInt("WarrantyCount"));
                 pq.setWarrantyRatio((float) rs.getDouble("WarrantyRatio"));
                 pq.setStatus(rs.getString("Status"));
@@ -51,12 +52,12 @@ public class WarrantyDAO extends DBContext {
     // Method to fetch the blacklist
     public List<ProductQuality> getBlacklist() {
         List<ProductQuality> list = new ArrayList<>();
-        String query = "SELECT UserName, "
+        String query = "SELECT ProductName, UserName, "
              + "COUNT(*) AS WarrantyCount, "
              + "(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Warranty)) AS WarrantyRatio, "
              + "CASE WHEN COUNT(*) >= 3 THEN 'Blacklist' ELSE 'Normal' END AS Status "
              + "FROM Warranty "
-             + "GROUP BY UserName "
+             + "GROUP BY ProductName, UserName "
              + "HAVING COUNT(*) >= 3;";
 
         try (Connection conn = DBContext();
@@ -64,7 +65,8 @@ public class WarrantyDAO extends DBContext {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 ProductQuality pq = new ProductQuality();
-                pq.setProductName(rs.getString("UserName"));
+                pq.setProductName(rs.getString("ProductName"));
+                pq.setUserName(rs.getString("UserName"));
                 pq.setWarrantyCount(rs.getInt("WarrantyCount"));
                 pq.setWarrantyRatio((float) rs.getDouble("WarrantyRatio"));
                 pq.setStatus(rs.getString("Status"));

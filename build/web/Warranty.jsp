@@ -49,37 +49,38 @@
                     <input type="text" id="productname" name="productname" class="form-control">   
                 </div> 
                 <div class="form-group">
-                    <label for="name">Gmail:</label>      
-                    <input type="text" id="email" name="email" class="form-control">   
+                    <label for="name">Email:</label>      
+                    <input type="email" id="email" name="email" class="form-control">   
                 </div> 
-                
-                    <div class="form-group">
-                        <label for="phoneNumber">Phone Number:</label>
-                        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" pattern="\d{10}" required>
-                        <div class="invalid-feedback" id="phoneNumberError" style="display:none; color: red;">
-                            Please enter a valid 10-digit phone number.
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="textInput">CauseError:</label>
-                        <input type="text" id="textInput" name="textInput" class="form-control" maxlength="36" required>
-                        <div class="invalid-feedback" id="textInputError" style="display:none; color: red;">
-                            Please enter a text with a maximum of 36 characters.
-                        </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" pattern="\d{10}" required>
+                    <div class="invalid-feedback" id="phoneNumberError" style="display:none; color: red;">
+                        Please enter a valid 10-digit phone number.
                     </div>
+                </div>
 
-                  
-                                        
-                <div class="form-group">                                                                                           
+                <div class="form-group">
+                    <label for="textInput">CauseError:</label>
+                    <input type="text" id="textInput" name="textInput" class="form-control" maxlength="36" required>
+                    <div class="invalid-feedback" id="textInputError" style="display:none; color: red;">
+                        Please enter a text with a maximum of 36 characters.
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
                     <label>Photo</label> <br/>
                     <input type="file" id="fileInput" name="fileInput" accept="image/jpeg, image/png" class="form-control">
                     <c:if test="${not empty error}">
                         <span style="color: red;">${error}</span>
                     </c:if>
+                    <span id="fileError" style="color: red;"></span> <!-- Span to display validation errors -->
                 </div>
 
-                <button onClick="alert('Received information. Please check the process in Mail')" type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" onclick="return validateFile()">
                     Submit
                 </button>
             </form>
@@ -134,6 +135,34 @@
                     this.submit();
                 }
             });
+        </script>
+        <script>
+            function validateFile() {
+                const fileInput = document.getElementById('fileInput');
+                const fileError = document.getElementById('fileError');
+                fileError.textContent = ''; // Clear previous errors
+
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    fileError.textContent = 'Please select a file.';
+                    return false;
+                }
+
+                const file = fileInput.files[0];
+                const allowedTypes = ['image/jpeg', 'image/png'];
+                const maxSize = 5 * 1024 * 1024; // 5 MB
+
+                if (!allowedTypes.includes(file.type)) {
+                    fileError.textContent = 'Only JPEG and PNG files are allowed.';
+                    return false;
+                }
+
+                if (file.size > maxSize) {
+                    fileError.textContent = 'File size must be less than 5 MB.';
+                    return false;
+                }
+
+                return true;
+            }
         </script>
     </body>
 </html>

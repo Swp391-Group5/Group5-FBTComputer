@@ -29,7 +29,7 @@ import javax.mail.Transport;
  *
  * @author DELL DN
  */
-@WebServlet(name = "sendOtp", urlPatterns = {"/sendOtp"})
+@WebServlet(name = "sendOtpResetPass", urlPatterns = {"/sendOtpResetPass"})
 
 public class SendOtpServlet extends HttpServlet {
 
@@ -81,12 +81,9 @@ public class SendOtpServlet extends HttpServlet {
         int otpvalue = 0;
         HttpSession mySession = request.getSession();
         // For forgotpassword only
-        if (customerDAO.checkEmail(email) == false) {
+        if (customerDAO.checkEmail(email) == false && adminDAO.checkEmail(email) == false) {
             request.setAttribute("Notexisted", "This email doesn't exist!");
-            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-        } else if (adminDAO.checkEmail(email) == false) {
-            request.setAttribute("Notexisted", "This email doesn't exist!");
-            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+            request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
         }
 
         if (email != null || !email.equals("")) {
@@ -121,20 +118,7 @@ public class SendOtpServlet extends HttpServlet {
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
-            String action = request.getParameter("action");
-            switch (action) {
-                case "change" -> {
-                    dispatcher = request.getRequestDispatcher("EnterOtpChangePass.jsp");
-                    break;
-                }
-                case "forgot" -> {
-                    dispatcher = request.getRequestDispatcher("EnterOTPResetPass.jsp");
-                    break;
-                }
-                default -> {
-                    throw new AssertionError();
-                }
-            }
+            dispatcher = request.getRequestDispatcher("EnterOTPResetPass.jsp");
 
             request.setAttribute("message", "An OTP code is sent to your email: " + email);
             mySession.setAttribute("otp", otpvalue);

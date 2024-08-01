@@ -131,8 +131,11 @@
                                 </td>
                                 <td style="text-align: center">
                                     <a href="<%=request.getContextPath()%>/myOrder?action=leaveFeedback0&id=${i.orderId}" 
-                                       class="text-primary" title="View" data-toggle="tooltip">
-                                        <button class="btn btn-light text-primary"><i class="fa-solid fa-comment"></i></button>
+                                       class="text-primary ${i.isSuccess == 'Pending' ? 'disabled-link' : ''}" 
+                                       title="View" data-toggle="tooltip">
+                                        <button class="btn btn-light text-primary" ${i.isSuccess == 'Pending' ? 'disabled' : ''}>
+                                            <i class="fa-solid fa-comment"></i>
+                                        </button>
                                     </a>
                                 </td>
                             </tr>
@@ -181,4 +184,26 @@
         <%@include file="includes/footer.jsp"%>
         <%@include file="includes/finish.jsp"%>
     </body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select all elements with the class 'disabled-link'
+            const disabledLinks = document.querySelectorAll('.disabled-link');
+
+            disabledLinks.forEach(function (link) {
+                // Prevent the default action of the link
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .disabled-link {
+            pointer-events: none; /* This makes the link non-clickable */
+            cursor: default; /* This changes the cursor to default */
+            color: gray; /* Optional: You can change the color to indicate it's disabled */
+        }
+    </style>
 </html>

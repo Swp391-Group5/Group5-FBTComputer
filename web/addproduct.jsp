@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="molder.Product" %>
+<%@ page import="model.Product" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -71,7 +71,7 @@
                         <div class="modal-body">					
                             <div class="form-group">
                                 <label>Name</label>
-                                <input name="name" type="text" class="form-control" value="${product.productName}">
+                                <input name="name" type="text" class="form-control" value="${product.productName}" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
@@ -80,15 +80,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input name="price" type="text" class="form-control" oninput="formatNumber(this)">
+                                <input name="price" type="text" class="form-control" oninput="formatNumber(this)" required>
                             </div>
                             <div class="form-group">
                                 <label>Quantity</label>
-                                <input name="quantity" type="number" class="form-control" >
+                                <input name="quantity" type="number" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Brand</label>
-                                <select name="brand" class="form-control">
+                                <select name="brand" class="form-control" required>
                                     <c:forEach items="${brands}" var="brand">
                                         <option value="${brand}">${brand}</option>
                                     </c:forEach>
@@ -96,10 +96,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Photo</label> <br/>
-                                <input type="file" id="fileInput" name="fileInput" accept="image/jpeg, image/png" class="form-control">
+                                <input type="file" id="fileInput" name="fileInput" accept="image/jpeg, image/png" class="form-control" required>
                                 <c:if test="${not empty error}">
                                     <span style="color: red;">${error}</span>
                                 </c:if>
+                                <span id="fileError" style="color: red;"></span> <!-- Span to display validation errors -->
                             </div>
                             <div class="form-group">
                                 <label for="category">Category:</label>
@@ -116,118 +117,146 @@
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" onclick="window.location.href = 'manager-product'" value="Cancel">
-                            <input onClick="alert('Add Product Success')"  type="submit" class="btn btn-success" value="Add">
-                            
-                    
+                            <input type="submit" class="btn btn-success" value="Add" onclick="return validateFile()">
                         </div>
-                        </br>
-                        </br>
-                        </br>
 
-                    </form>
-                    <script>
-                        function checkImageFile() {
-                            var fileInput = document.getElementById('files');
-                            var filePath = fileInput.value;
-                            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                            if (!allowedExtensions.exec(filePath)) {
-                                alert('Chỉ cho phép tải lên các file có định dạng: .jpeg/.jpg/.png/.gif');
-                                fileInput.value = '';
-                                return false;
-                            }
+                </div>
+                </br>
+                </br>
+                </br>
+
+                </form>
+                <script>
+                    function validateFile() {
+                        const fileInput = document.getElementById('fileInput');
+                        const fileError = document.getElementById('fileError');
+                        fileError.textContent = ''; // Clear previous errors
+
+                        if (!fileInput.files || fileInput.files.length === 0) {
+                            fileError.textContent = 'Please select a file.';
+                            return false;
                         }
-                    </script>
-                    <script>
 
-                        function handleFileSelect(event) {
-                            const input = event.target;
-                            const preview = input.nextElementSibling;
-                            const files = input.files;
+                        const file = fileInput.files[0];
+                        const allowedTypes = ['image/jpeg', 'image/png'];
+                        const maxSize = 5 * 1024 * 1024; // 5 MB
 
-                            if (!files || files.length === 0) {
-                                return;
-                            }
+                        if (!allowedTypes.includes(file.type)) {
+                            fileError.textContent = 'Only JPEG and PNG files are allowed.';
+                            return false;
+                        }
 
-                            const file = files[0];
+                        if (file.size > maxSize) {
+                            fileError.textContent = 'File size must be less than 5 MB.';
+                            return false;
+                        }
 
+                        return true;
+                    }
+                </script>
+                <script>
+                    function checkImageFile() {
+                        var fileInput = document.getElementById('files');
+                        var filePath = fileInput.value;
+                        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                        if (!allowedExtensions.exec(filePath)) {
+                            alert('Chỉ cho phép tải lên các file có định dạng: .jpeg/.jpg/.png/.gif');
+                            fileInput.value = '';
+                            return false;
+                        }
+                    }
+                </script>
+                <script>
 
-                            if (!file.type.startsWith('image/')) {
-                                return;
-                            }
+                    function handleFileSelect(event) {
+                        const input = event.target;
+                        const preview = input.nextElementSibling;
+                        const files = input.files;
 
+                        if (!files || files.length === 0) {
+                            return;
+                        }
 
-                            const reader = new FileReader();
-
-
-                            reader.onload = function (e) {
-                                const imgSrc = e.target.result;
-
-
-                                const img = document.createElement('img');
-                                img.src = imgSrc;
-
-
-                                const removeBtn = document.createElement('button');
-                                removeBtn.innerHTML = 'X';
-                                removeBtn.className = 'remove-btn';
-                                removeBtn.onclick = function () {
-
-                                    preview.innerHTML = '';
-                                    input.value = '';
-                                };
-
-
-                                const imageWrapper = document.createElement('div');
-                                imageWrapper.className = 'img-wrapper';
-                                imageWrapper.appendChild(img);
-                                imageWrapper.appendChild(removeBtn);
+                        const file = files[0];
 
 
-                                while (preview.firstChild) {
-                                    preview.removeChild(preview.firstChild);
-                                }
+                        if (!file.type.startsWith('image/')) {
+                            return;
+                        }
 
 
-                                preview.appendChild(imageWrapper);
+                        const reader = new FileReader();
+
+
+                        reader.onload = function (e) {
+                            const imgSrc = e.target.result;
+
+
+                            const img = document.createElement('img');
+                            img.src = imgSrc;
+
+
+                            const removeBtn = document.createElement('button');
+                            removeBtn.innerHTML = 'X';
+                            removeBtn.className = 'remove-btn';
+                            removeBtn.onclick = function () {
+
+                                preview.innerHTML = '';
+                                input.value = '';
                             };
 
 
-                            reader.readAsDataURL(file);
-                        }
+                            const imageWrapper = document.createElement('div');
+                            imageWrapper.className = 'img-wrapper';
+                            imageWrapper.appendChild(img);
+                            imageWrapper.appendChild(removeBtn);
 
 
-                        const fileInputs = document.querySelectorAll('input[type="file"]');
-                        fileInputs.forEach(function (input) {
-                            input.addEventListener('change', handleFileSelect);
-                        });
-                    </script>
-                    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+                            while (preview.firstChild) {
+                                preview.removeChild(preview.firstChild);
+                            }
 
-                    <script>
-                        ClassicEditor
-                                .create(document.querySelector('#description'), {
-                                    ckfinder: {
-                                        uploadUrl: 'https://ckeditor.com/apps/ckfinder/3.5.0/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
-                                    },
+
+                            preview.appendChild(imageWrapper);
+                        };
+
+
+                        reader.readAsDataURL(file);
+                    }
+
+
+                    const fileInputs = document.querySelectorAll('input[type="file"]');
+                    fileInputs.forEach(function (input) {
+                        input.addEventListener('change', handleFileSelect);
+                    });
+                </script>
+                <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+
+                <script>
+                    ClassicEditor
+                            .create(document.querySelector('#description'), {
+                                ckfinder: {
+                                    uploadUrl: 'https://ckeditor.com/apps/ckfinder/3.5.0/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+                                },
+                                toolbar: [
+                                    'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo', 'uploadImage'
+                                ],
+                                image: {
                                     toolbar: [
-                                        'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo', 'uploadImage'
-                                    ],
-                                    image: {
-                                        toolbar: [
-                                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
-                                        ]
-                                    }
-                                })
-                                .then(editor => {
-                                    console.log(editor);
-                                })
-                                .catch(error => {
-                                    console.error(error);
-                                });
-                    </script>
+                                        'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                                    ]
+                                }
+                            })
+                            .then(editor => {
+                                console.log(editor);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                </script>
 
-                </div>
             </div>
-        </div>             
-    </body>
+        </div>
+    </div>             
+</body>
 </html>

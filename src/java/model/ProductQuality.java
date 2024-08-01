@@ -9,16 +9,19 @@ package model;
  * @author LEGION
  */
 public class ProductQuality {
+    
     private String productName;
+    private String userName;
     private int warrantyCount;
     private float warrantyRatio;
     private String status;
 
     public ProductQuality() {
     }
-    
-    public ProductQuality(String productName, int warrantyCount, float warrantyRatio, String status) {
+
+    public ProductQuality(String productName, String userName, int warrantyCount, float warrantyRatio, String status) {
         this.productName = productName;
+        this.userName = userName;
         this.warrantyCount = warrantyCount;
         this.warrantyRatio = warrantyRatio;
         this.status = status;
@@ -30,6 +33,14 @@ public class ProductQuality {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getWarrantyCount() {
@@ -58,8 +69,10 @@ public class ProductQuality {
 
     @Override
     public String toString() {
-        return "ProductQuality{" + "productName=" + productName + ", warrantyCount=" + warrantyCount + ", warrantyRatio=" + warrantyRatio + ", status=" + status + '}';
+        return "ProductQuality{" + "productName=" + productName + ", userName=" + userName + ", warrantyCount=" + warrantyCount + ", warrantyRatio=" + warrantyRatio + ", status=" + status + '}';
     }
+    
+    
     
     
 }

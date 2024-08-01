@@ -82,7 +82,7 @@
                         <select class="form-select" onchange="location = this.value;">
                             <option value="<%=request.getContextPath()%>/myOrder?action=viewDetail&id=${requestScope.orderId}">None</option>
                             <option value="<%=request.getContextPath()%>/myOrder?action=viewDetail&id=${requestScope.orderId}&filter=Laptop">Laptop</option>
-                            <option value="<%=request.getContextPath()%>/myOrder?action=viewDetail&id=${requestScope.orderId}&filter=Mouse">Mouse</option>
+                            <option value="<%=request.getContextPath()%>/myOrder?action=viewDetail&id=${requestScope.orderId}&filter=Computer Mice">Computer Mice</option>
                             <option value="<%=request.getContextPath()%>/myOrder?action=viewDetail&id=${requestScope.orderId}&filter=Headphone">Headphone</option>
                             <option value="<%=request.getContextPath()%>/myOrder?action=viewDetail&id=${requestScope.orderId}&filter=Keyboard">Keyboard</option>
                             <option value="<%= request.getParameter("filter") %>" <%=(request.getParameter("filter") == null) ? "" : "selected" %> hidden><%= request.getParameter("filter") %></option>
@@ -157,7 +157,7 @@
                                 <td>${i.productBrand}</td>
                                 <td>${i.getFormattedPrice()}VND</td>
                                 <td>
-                                    <a href="<%=request.getContextPath()%>/myOrder?action=viewProductDetail&id=${i.productId}" 
+                                    <a href="<%=request.getContextPath()%>/detail?productId=${i.productId}" 
                                        class="text-primary" title="View" data-toggle="tooltip">
                                         <button class="btn btn-light text-primary"><i class="fa-solid fa-eye"></i></button>
                                     </a>

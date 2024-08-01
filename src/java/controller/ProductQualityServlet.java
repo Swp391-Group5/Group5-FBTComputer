@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ProductQuality;
+import model.Admin;
+import jakarta.servlet.http.HttpSession;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,6 +21,17 @@ public class ProductQualityServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Admin sessionAdmin = null;
+        try {
+            sessionAdmin = (Admin) session.getAttribute("admin");
+            if (sessionAdmin == null) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath() + "/home");
+            return;
+        }
         WarrantyDAO wdao = new WarrantyDAO();
         List<ProductQuality> productQualityList = wdao.getProductQualityList();
 
@@ -53,17 +66,19 @@ public class ProductQualityServlet extends HttpServlet {
 
         // Tạo dòng tiêu đề
         XSSFRow headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("User Name");
-        headerRow.createCell(1).setCellValue("Warranty Count");
-        headerRow.createCell(2).setCellValue("Warranty Ratio (%)");
+        headerRow.createCell(0).setCellValue("Product Name");
+        headerRow.createCell(1).setCellValue("User Name");
+        headerRow.createCell(2).setCellValue("Warranty Count");
+        headerRow.createCell(3).setCellValue("Warranty Ratio (%)");
 
         // Điền dữ liệu vào các dòng
         int rowNum = 1;
         for (ProductQuality pq : blacklist) {
             XSSFRow row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(pq.getProductName());
-            row.createCell(1).setCellValue(pq.getWarrantyCount());
-            row.createCell(2).setCellValue(pq.getWarrantyRatio());
+            row.createCell(1).setCellValue(pq.getUserName());
+            row.createCell(2).setCellValue(pq.getWarrantyCount());
+            row.createCell(3).setCellValue(pq.getWarrantyRatio());
         }
 
         // Thiết lập kiểu nội dung và tên file xuất ra

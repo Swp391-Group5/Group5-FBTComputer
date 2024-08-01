@@ -65,7 +65,7 @@ public class ExcelCategoryControl extends HttpServlet {
         }
 
         // Đường dẫn nơi lưu file tạm thời
-        String filePath = "C:\\Users\\admin\\Downloads\\chip\\";
+        String filePath = "C:\\Users\\hungp\\Downloads\\chip\\";
         Random rn = new Random();
         int randomNum = rn.nextInt(Integer.MAX_VALUE - 1) + 1;
         String fileName = "categories-" + randomNum + ".xlsx";
