@@ -3,27 +3,39 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/FPTLaptopWeb/src/java/model/ProductQuality.java</file>
-            <file>file:/C:/FPTLaptopWeb/web/css/detail2.css</file>
-            <file>file:/C:/FPTLaptopWeb/web/addproduct.jsp</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/controller/MyOrderServlet.java</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/Utils/WarrantyPDFServlet.java</file>
-            <file>file:/C:/FPTLaptopWeb/web/admin/orderManager.jsp</file>
-            <file>file:/C:/FPTLaptopWeb/web/Warranty.jsp</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/controller/ProductQualityServlet.java</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/controller/ManageWarrantyServlet.java</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/controller/SaveWarrantyServlet.java</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/controller/ExcelBlog.java</file>
-            <file>file:/C:/FPTLaptopWeb/web/detailsP.jsp</file>
-            <file>file:/C:/FPTLaptopWeb/web/myOrder.jsp</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/dal/WarrantyDAO.java</file>
-            <file>file:/C:/FPTLaptopWeb/web/MKTAddSlider.jsp</file>
-            <file>file:/C:/FPTLaptopWeb/src/java/controller/ExportBlacklistController.java</file>
-            <file>file:/C:/FPTLaptopWeb/web/blogs.jsp</file>
             <file>file:/C:/FPTLaptopWeb/src/java/controller/ExcelCategoryControl.java</file>
+            <file>file:/C:/FPTLaptopWeb/web/includes/adminNavbar.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/ChangePasswordOTP.java</file>
+            <file>file:/C:/FPTLaptopWeb/web/admin/addOrUpdateUser.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/changePassword.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/EnterOtpChangePass.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/SendOtpChangePass.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/MyOrderServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/web/MKTAddSlider.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/ManageWarrantyServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/ExcelBlog.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/LoginGoogleHandlerServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/web/Warranty.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/dal/WarrantyDAO.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/dal/CustomerDAO.java</file>
             <file>file:/C:/FPTLaptopWeb/web/product-quality.jsp</file>
             <file>file:/C:/FPTLaptopWeb/src/java/controller/DetailProductServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/web/css/detail2.css</file>
+            <file>file:/C:/FPTLaptopWeb/web/newPassword.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/addproduct.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/EnterOTPResetPass.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/blogs.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/myOrder.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/admin/orderManager.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/web/admin/orderManagerDetail.jsp</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/ExportBlacklistController.java</file>
+            <file>file:/C:/FPTLaptopWeb/web/detailsP.jsp</file>
             <file>file:/C:/FPTLaptopWeb/src/java/controller/UploadImage.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/SaveWarrantyServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/Utils/WarrantyPDFServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/ProductQualityServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/LoginServlet.java</file>
+            <file>file:/C:/FPTLaptopWeb/src/java/controller/AdminOrderManager.java</file>
         </group>
     </open-files>
 </project-private>
