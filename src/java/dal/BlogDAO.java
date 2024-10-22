@@ -486,7 +486,7 @@ public class BlogDAO extends DBContext {
         String sql = "SELECT Blog.*, Admin.AdminName FROM Blog "
                 + "JOIN Admin ON Blog.AdminId = Admin.AdminId "
                 + "WHERE BlogStatus = ? And CategoryBlogId = 1";
-
+        
         if (!title.isEmpty()) {
             sql += " AND BlogTitle LIKE ?";
         }

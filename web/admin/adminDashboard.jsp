@@ -339,7 +339,7 @@
                                     <th>Top ${loop.index +1}</th>
                                     <td>${i.productId}</td>
                                     <td>${i.productName}</td>
-                                    <td><img src="${i.productImage}" style="width: 100px"></td>
+                                    <td><img src="UPLOAD_IMAGE1/${i.productImage}" style="width: 100px"></td>
                                     <td>${i.getFormattedPrice()}VND</td>
                                     <td>${i.productCount}</td>
                                 </tr>

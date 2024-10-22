@@ -34,16 +34,6 @@
                 text-align: left;
             }
 
-/*            input[type="number"],
-            input[type="text"],
-            button,
-            select {
-                width: 100%;
-                padding: 10px;
-                margin-top: 10px;
-                border-radius: 5px;
-                box-sizing: border-box;
-            }*/
 
             button {
                 font-size: 1rem;

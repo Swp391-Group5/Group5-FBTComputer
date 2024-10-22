@@ -134,7 +134,7 @@
                         <c:forEach items="${sessionScope.listSlider_HomePageAll}" var="s">
                             <div class="carousel-item ${s.blogId == sessionScope.sliderFirst.blogId ? 'active' : ''}">
                                 <a href="#">
-                                    <img src="UPLOAD_IMAGE/${s.img}" style="object-fit: contain;"  class="d-block w-100" alt="${s.blogTitle}">
+                                    <img src="UPLOAD_IMAGE1/${s.img}" style="object-fit: contain;"  class="d-block w-100" alt="${s.blogTitle}">
                                 </a>
                             </div>
                         </c:forEach>
